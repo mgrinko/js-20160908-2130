@@ -3,6 +3,11 @@
 
 <head>
   <meta charset="utf-8">
+  <style>
+    .js-closed ul {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -41,10 +46,21 @@
 
       var ul = document.createElement('ul');
 
-      for (var key in obj) {
-        var li = document.createElement('li');
+      for (let key in obj) {
+        let li = document.createElement('li');
 
-        li.innerHTML = key;
+        li.innerHTML = `<span class="tree-title"><b>${key}</b></span>`;
+
+        let span = li.firstElementChild;
+
+        span.addEventListener('click', function(event) {
+          // event.currentTarget - куда доплыло
+          let cotainer = event.currentTarget.closest('li');
+
+          cotainer.classList.toggle('js-closed');
+        });
+
+
 
         var childrenUl = this._createTreeDom(obj[key]);
 
