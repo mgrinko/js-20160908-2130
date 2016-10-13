@@ -7,7 +7,8 @@
 
 <body>
 
-<div id="container"></div>
+
+<div id="tree"></div>
 
 <script>
   var data = {
@@ -28,43 +29,50 @@
     }
   };
 
-  var container = document.getElementById('container');
-
-  createTree(container, data);
-
-
-
-  function createTree(container, obj) {
-    container.appendChild(createTreeDom(obj));
-  }
-
-  function createTreeDom(obj) {
-    // если нет детей, то рекурсивный вызов ничего не возвращает
-    // так что вложенный UL не будет создан
-    if (isObjectEmpty(obj)) return;
-
-    var ul = document.createElement('ul');
-
-    for (var key in obj) {
-      var li = document.createElement('li');
-      li.innerHTML = key;
-
-      var childrenUl = createTreeDom(obj[key]);
-      if (childrenUl) li.appendChild(childrenUl);
-
-      ul.appendChild(li);
+  class Tree {
+    constructor(el, data) {
+      el.appendChild(this._createTreeDom(data));
     }
 
-    return ul;
-  }
+    _createTreeDom(obj) {
+      if (this._isObjectEmpty(obj)) {
+        return;
+      }
 
+      var ul = document.createElement('ul');
 
-  function isObjectEmpty(obj) {
-    for (var key in obj) {
-      return false;
+      for (var key in obj) {
+        var li = document.createElement('li');
+
+        li.innerHTML = key;
+
+        var childrenUl = this._createTreeDom(obj[key]);
+
+        if (childrenUl) {
+          li.appendChild(childrenUl);
+        }
+
+        ul.appendChild(li);
+      }
+
+      return ul;
     }
-    return true;
+
+    _isObjectEmpty(obj) {
+      for (var key in obj) {
+        return false;
+      }
+      return true;
+    }
   }
+
+  var container = document.getElementById('tree');
+
+  new Tree(container, data);
+
+
+
+
 
 </script>
 
