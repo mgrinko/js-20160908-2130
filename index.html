@@ -36,50 +36,50 @@
 
   class Tree {
     constructor(el, data) {
-      el.appendChild(this._createTreeDom(data));
+      el.addEventListener('click', this._onBranchTitleClick.bind(this));
+
+      el.innerHTML = this._createTreeHTML(data);
 
       el.classList.add('tree');
     }
 
     _onBranchTitleClick(event) {
-      // event.currentTarget - куда доплыло
-      let cotainer = event.currentTarget.closest('li');
+      let titleElement = event.target.closest('.tree__branch-title');
 
-      cotainer.classList.toggle('tree__branch--closed');
-    }
-
-    _createTreeDom(obj) {
-      if (this._isObjectEmpty(obj)) {
+      if (!titleElement) {
         return;
       }
 
-      var ul = document.createElement('ul');
+      let branchElement = titleElement.closest('.tree__branch');
 
-      ul.classList.add('tree__branch-list');
+      branchElement.classList.toggle('tree__branch--closed');
+    }
 
-      for (let key in obj) {
-        let li = document.createElement('li');
+    _createTreeHTML(obj) {
+      let html = '';
 
-        li.classList.add('tree__branch');
-
-        li.innerHTML = `<span class="tree__branch-title"><b>${key}</b></span>`;
-
-        let span = li.firstElementChild;
-
-        span.addEventListener('click', this._onBranchTitleClick.bind(this));
-
-
-
-        var childrenUl = this._createTreeDom(obj[key]);
-
-        if (childrenUl) {
-          li.appendChild(childrenUl);
-        }
-
-        ul.appendChild(li);
+      if (this._isObjectEmpty(obj)) {
+        return '';
       }
 
-      return ul;
+
+      html += `<ul class="tree__branch-list">`;
+
+      for (let key in obj) {
+        html += `
+          <li class="tree__branch">
+            <span class="tree__branch-title">
+              <b>${key}</b>
+            </span>
+
+            ${ this._createTreeHTML(obj[key]) }
+          </li>
+        `;
+      }
+
+      html += `</ul>`;
+
+      return html;
     }
 
     _isObjectEmpty(obj) {
