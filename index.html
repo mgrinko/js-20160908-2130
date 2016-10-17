@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <style>
-    .js-closed ul {
+    .tree__branch.tree__branch--closed .tree__branch-list {
       display: none;
     }
   </style>
@@ -37,6 +37,15 @@
   class Tree {
     constructor(el, data) {
       el.appendChild(this._createTreeDom(data));
+
+      el.classList.add('tree');
+    }
+
+    _onBranchTitleClick(event) {
+      // event.currentTarget - куда доплыло
+      let cotainer = event.currentTarget.closest('li');
+
+      cotainer.classList.toggle('tree__branch--closed');
     }
 
     _createTreeDom(obj) {
@@ -46,19 +55,18 @@
 
       var ul = document.createElement('ul');
 
+      ul.classList.add('tree__branch-list');
+
       for (let key in obj) {
         let li = document.createElement('li');
 
-        li.innerHTML = `<span class="tree-title"><b>${key}</b></span>`;
+        li.classList.add('tree__branch');
+
+        li.innerHTML = `<span class="tree__branch-title"><b>${key}</b></span>`;
 
         let span = li.firstElementChild;
 
-        span.addEventListener('click', function(event) {
-          // event.currentTarget - куда доплыло
-          let cotainer = event.currentTarget.closest('li');
-
-          cotainer.classList.toggle('js-closed');
-        });
+        span.addEventListener('click', this._onBranchTitleClick.bind(this));
 
 
 
