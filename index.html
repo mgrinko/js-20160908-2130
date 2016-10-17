@@ -9,6 +9,7 @@
     }
   </style>
 
+  <script src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
   <script src="tree.js" defer></script>
   <script src="index.js" defer></script>
 </head>
@@ -19,15 +20,13 @@
 
 <script type="text/template" id="tree-template">
   <ul class="tree__branch-list">
-    for (let key in data.obj) {
+    <% for (let key in obj) { %>
     <li class="tree__branch">
       <span class="tree__branch-title">
-        <b>${key}</b>
+        <b><%- key %></b>
       </span>
-
-      ${ this._createTreeHTML(data.obj[key]) }
     </li>
-    }
+    <% } %>
   </ul>
 </script>
 

@@ -4,6 +4,8 @@ class Tree {
   constructor(el, data) {
     var markup = document.getElementById('tree-template').innerHTML;
 
+    this._render = _.template(markup);
+
     el.addEventListener('click', this._onBranchTitleClick.bind(this));
 
     el.innerHTML = this._createTreeHTML(data);
@@ -23,26 +25,6 @@ class Tree {
 
   _toggleBranch(branchElement) {
     branchElement.classList.toggle('tree__branch--closed');
-  }
-
-  _render(data) {
-    let html = `<ul class="tree__branch-list">`;
-
-    for (let key in data.obj) {
-      html += `
-          <li class="tree__branch">
-            <span class="tree__branch-title">
-              <b>${key}</b>
-            </span>
-
-            ${ this._createTreeHTML(data.obj[key]) }
-          </li>
-        `;
-    }
-
-    html += `</ul>`;
-
-    return html;
   }
 
   _createTreeHTML(obj) {
