@@ -50,8 +50,10 @@
         return;
       }
 
-      let branchElement = titleElement.closest('.tree__branch');
+      this._toggleBranch(titleElement.closest('.tree__branch'));
+    }
 
+    _toggleBranch(branchElement) {
       branchElement.classList.toggle('tree__branch--closed');
     }
 
