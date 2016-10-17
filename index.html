@@ -8,98 +8,27 @@
       display: none;
     }
   </style>
+
+  <script src="tree.js" defer></script>
+  <script src="index.js" defer></script>
 </head>
 
 <body>
 
-
 <div id="tree"></div>
 
-<script>
-  var data = {
-    "Рыбы": {
-      "Форель": {},
-      "Щука": {}
-    },
+<script type="text/template" id="tree-template">
+  <ul class="tree__branch-list">
+    for (let key in data.obj) {
+    <li class="tree__branch">
+      <span class="tree__branch-title">
+        <b>${key}</b>
+      </span>
 
-    "Деревья": {
-      "Хвойные": {
-        "Лиственница": {},
-        "Ель": {}
-      },
-      "Цветковые": {
-        "Берёза": {},
-        "Тополь": {}
-      }
+      ${ this._createTreeHTML(data.obj[key]) }
+    </li>
     }
-  };
-
-  class Tree {
-    constructor(el, data) {
-      el.addEventListener('click', this._onBranchTitleClick.bind(this));
-
-      el.innerHTML = this._createTreeHTML(data);
-
-      el.classList.add('tree');
-    }
-
-    _onBranchTitleClick(event) {
-      let titleElement = event.target.closest('.tree__branch-title');
-
-      if (!titleElement) {
-        return;
-      }
-
-      this._toggleBranch(titleElement.closest('.tree__branch'));
-    }
-
-    _toggleBranch(branchElement) {
-      branchElement.classList.toggle('tree__branch--closed');
-    }
-
-    _createTreeHTML(obj) {
-      let html = '';
-
-      if (this._isObjectEmpty(obj)) {
-        return '';
-      }
-
-
-      html += `<ul class="tree__branch-list">`;
-
-      for (let key in obj) {
-        html += `
-          <li class="tree__branch">
-            <span class="tree__branch-title">
-              <b>${key}</b>
-            </span>
-
-            ${ this._createTreeHTML(obj[key]) }
-          </li>
-        `;
-      }
-
-      html += `</ul>`;
-
-      return html;
-    }
-
-    _isObjectEmpty(obj) {
-      for (var key in obj) {
-        return false;
-      }
-      return true;
-    }
-  }
-
-  var container = document.getElementById('tree');
-
-  new Tree(container, data);
-
-
-
-
-
+  </ul>
 </script>
 
 </body>
