@@ -179,11 +179,12 @@
           <ul class="<%= listClass %>">
             <% items.forEach(function(item) { %>
 
-            <li class="thumbnail">
-              <a href="#<%= item.id %>" class="thumb">
+            <li class="thumbnail" data-element="item-container" data-item-id="<%= item.id %>">
+              <a href="#<%= item.id %>" class="thumb" data-element="item-detail-link">
                 <img alt="<%- item.name %>" src="<%= item.imageUrl %>">
               </a>
-              <a href="#<%= item.id %>"><%- item.name %></a>
+
+              <a href="#<%= item.id %>" data-element="item-detail-link"><%- item.name %></a>
 
               <p><%- item.snippet %></p>
             </li>

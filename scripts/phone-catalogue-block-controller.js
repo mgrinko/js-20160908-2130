@@ -15,5 +15,15 @@ class PhoneCatalogueBlockController {
     });
 
     this._catalogue.show();
+
+    this._catalogue.getElement().addEventListener('itemSelected', this._onCatalogueItemSelected.bind(this));
+  }
+
+  _onCatalogueItemSelected(event) {
+    alert(event.detail);
+
+    // this._catalogue.hide();
+    // this._viewer.hide();
+    // this._viewer.render({});
   }
 }
