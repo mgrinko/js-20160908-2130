@@ -33,7 +33,8 @@ class Tree {
     }
 
     return this._render({
-      obj: obj
+      data: obj,
+      createTree: this._createTreeHTML.bind(this)
     });
   }
 

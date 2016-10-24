@@ -7,6 +7,10 @@
     .tree__branch.tree__branch--closed .tree__branch-list {
       display: none;
     }
+
+    .tree__branch-title {
+      cursor: pointer;
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
@@ -20,11 +24,13 @@
 
 <script type="text/template" id="tree-template">
   <ul class="tree__branch-list">
-    <% for (let key in obj) { %>
+    <% for (let key in data) { %>
     <li class="tree__branch">
       <span class="tree__branch-title">
         <b><%- key %></b>
       </span>
+
+      <%= createTree(data[key]) %>
     </li>
     <% } %>
   </ul>
