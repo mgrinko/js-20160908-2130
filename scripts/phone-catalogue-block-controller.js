@@ -6,7 +6,8 @@ class PhoneCatalogueBlockController {
 
     this._catalogue = new ItemCatalogue({
       element: this._el.querySelector('[data-component="item-catalogue"]'),
-      items: options.phones
+      items: options.phones,
+      listClass: 'phones'
     });
 
     this._viewer = new ItemViewer({
