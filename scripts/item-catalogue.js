@@ -7,10 +7,15 @@ class ItemCatalogue extends Component {
     this._items = options.items;
     this._listClass = options.listClass;
 
-    this._template = document.getElementById('item-catalogue-template').innerHTML;
-    this._templateFunction = _.template(this._template);
+    this._mainTemplate = document.getElementById('item-catalogue-template').innerHTML;
+    this._itemsTemplate = document.getElementById('item-catalogue-items-template').innerHTML;
+    this._itemsTemplateFunction = _.template(this._itemsTemplate);
 
-    this._render(this._items);
+    this._render();
+
+    this._itemListElement = this._el.querySelector('[data-element="items-list"]');
+
+    this._renderItems(this._items);
 
     this._filter = new Filter({
       element: this._el.querySelector('[data-component="filter"]')
@@ -41,7 +46,7 @@ class ItemCatalogue extends Component {
     let filterValue = event.detail;
     let filteredItems = this._getItems(filterValue);
 
-    this._render(filteredItems);
+    this._renderItems(filteredItems);
   }
 
   _getItems(query) {
@@ -51,10 +56,13 @@ class ItemCatalogue extends Component {
     });
   }
 
-  _render(items) {
-    this._el.innerHTML = this._templateFunction({
-      items: items,
-      listClass: this._listClass
+  _render() {
+    this._el.innerHTML = this._mainTemplate;
+  }
+
+  _renderItems(items) {
+    this._itemListElement.innerHTML = this._itemsTemplateFunction({
+      items: items
     });
   }
 

@@ -64,6 +64,25 @@
     </ul>
   </script>
 
+  <script type="text/template" id="item-catalogue-items-template">
+    <% items.forEach(function(item) { %>
+
+    <li class="thumbnail"
+      data-element="item-container"
+      data-item-id="<%= item.id %>">
+
+      <a href="#<%= item.id %>" class="thumb" data-element="item-details-link">
+        <img alt="<%- item.name %>" src="<%= item.imageUrl %>">
+      </a>
+
+      <a href="#<%= item.id %>" data-element="item-details-link"><%- item.name %></a>
+
+      <p><%- item.snippet %></p>
+    </li>
+
+    <% }); %>
+  </script>
+
   <script type="text/template" id="item-catalogue-template">
     <form class="form-inline">
       <div class="form-group" data-component="filter">
@@ -81,24 +100,7 @@
       </div>
     </form>
 
-    <ul class="<%= listClass %> list-unstyled">
-      <% items.forEach(function(item) { %>
-
-      <li class="thumbnail"
-        data-element="item-container"
-        data-item-id="<%= item.id %>">
-
-        <a href="#<%= item.id %>" class="thumb" data-element="item-details-link">
-          <img alt="<%- item.name %>" src="<%= item.imageUrl %>">
-        </a>
-
-        <a href="#<%= item.id %>" data-element="item-details-link"><%- item.name %></a>
-
-        <p><%- item.snippet %></p>
-      </li>
-
-      <% }); %>
-    </ul>
+    <ul class="phones list-unstyled" data-element="items-list"></ul>
   </script>
 
 </body>
