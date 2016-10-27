@@ -1,8 +1,9 @@
 'use strict';
 
-class ItemCatalogue {
+class ItemCatalogue extends Component {
   constructor(options) {
-    this._el = options.element;
+    super(options.element);
+
     this._items = options.items;
     this._listClass = options.listClass;
 
@@ -12,14 +13,6 @@ class ItemCatalogue {
     this._render(this._items);
 
     this._el.addEventListener('click', this._onItemDetailsLinkClick.bind(this));
-  }
-
-  getElement() {
-    return this._el;
-  }
-
-  show() {
-    this._el.classList.remove('js-hidden');
   }
 
   _onItemDetailsLinkClick(event) {
