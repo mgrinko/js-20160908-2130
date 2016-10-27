@@ -11,7 +11,7 @@ class ItemCatalogue {
 
     this._render(this._items);
 
-    this._el.addEventListener('click', this._onItemClick.bind(this));
+    this._el.addEventListener('click', this._onItemDetailsLinkClick.bind(this));
   }
 
   getElement() {
@@ -22,8 +22,8 @@ class ItemCatalogue {
     this._el.classList.remove('js-hidden');
   }
 
-  _onItemClick(event) {
-    let link = event.target.closest('[data-element="item-detail-link"]');
+  _onItemDetailsLinkClick(event) {
+    let link = event.target.closest('[data-element="item-details-link"]');
 
     if (!link) {
       return;
