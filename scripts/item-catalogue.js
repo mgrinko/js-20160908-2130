@@ -71,23 +71,20 @@
 
       this._showSpinner();
 
-      this._xhr = new XMLHttpRequest();
-
-      this._xhr.open('GET', url, true);
-
-      this._xhr.send();
-
-      this._xhr.onload = this._onItemsLoaded.bind(this);
+      ajaxService.loadJson(url, {
+        onsuccess: this._onItemsLoadSuccess.bind(this),
+        onerror: this._onItemsLoadError.bind(this)
+      });
     }
 
-    _onItemsLoaded() {
-      if (this._xhr.status !== 200) {
-        alert( this._xhr.status + ': ' + this._xhr.statusText ); // пример вывода: 404: Not Found
-      } else {
-        this._items = JSON.parse(this._xhr.responseText);
+    _onItemsLoadSuccess(items) {
+      this._items = items;
 
-        this._renderItems(this._items);
-      }
+      this._renderItems(this._items);
+    }
+
+    _onItemsLoadError(error) {
+      console.error(error);
     }
 
     _filterItems(query) {
