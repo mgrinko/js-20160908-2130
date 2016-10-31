@@ -72,8 +72,7 @@ class PhoneCatalogueBlockController {
 
     this._catalogue = new ItemCatalogue({
       element: this._el.querySelector('[data-component="item-catalogue"]'),
-      items: options.phones,
-      listClass: 'phones'
+      baseUrl: '/data/phones/phones.json'
     });
 
     this._viewer = new ItemViewer({
@@ -83,7 +82,7 @@ class PhoneCatalogueBlockController {
 
     this._catalogue.show();
 
-    this._catalogue.getElement().addEventListener('catalogue.itemSelected', this._onCatalogueItemSelected.bind(this));
+    this._catalogue.getElement().addEventListener(ItemCatalogue.EVENTS.itemSelected, this._onCatalogueItemSelected.bind(this));
     this._viewer.getElement().addEventListener('viewer.back', this._onViewerBack.bind(this));
   }
 

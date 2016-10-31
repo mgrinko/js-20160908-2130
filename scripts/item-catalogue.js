@@ -12,13 +12,13 @@
     itemSelected: 'catalogue.itemSelected'
   };
 
-
   class ItemCatalogue extends Component {
     constructor(options) {
       super(options.element);
 
-      this._items = options.items;
-      this._listClass = options.listClass;
+      this._baseUrl = options.baseUrl;
+
+      this._items = this._getItems();
 
       this._mainTemplate = document.getElementById('item-catalogue-template').innerHTML;
       this._itemsTemplate = document.getElementById('item-catalogue-items-template').innerHTML;
@@ -63,10 +63,25 @@
     }
 
     _getItems(query) {
-      return this._items.filter(function(item) {
-        return (item.name.indexOf(query) !== -1)
-          || (item.snippet.indexOf(query) !== -1);
-      });
+      var xhr = new XMLHttpRequest();
+
+      xhr.open('GET', this._baseUrl, false);
+
+      xhr.send();
+
+      if (xhr.status !== 200) {
+        alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+      } else {
+        return JSON.parse(xhr.responseText);
+      }
+
+
+
+
+      // return this._items.filter(function(item) {
+      //   return (item.name.indexOf(query) !== -1)
+      //     || (item.snippet.indexOf(query) !== -1);
+      // });
     }
 
     _render() {
@@ -87,6 +102,8 @@
       this._el.dispatchEvent(event);
     }
   }
+
+  ItemCatalogue.EVENTS = EVENTS;
 
   window.ItemCatalogue = ItemCatalogue;
 
