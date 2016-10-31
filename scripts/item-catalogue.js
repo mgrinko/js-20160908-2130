@@ -18,7 +18,7 @@
 
       this._baseUrl = options.baseUrl;
 
-      this._items = this._getItems();
+      this._items = [];
 
       this._mainTemplate = document.getElementById('item-catalogue-template').innerHTML;
       this._itemsTemplate = document.getElementById('item-catalogue-items-template').innerHTML;
@@ -28,7 +28,7 @@
 
       this._itemListElement = this._el.querySelector('[data-element="items-list"]');
 
-      this._renderItems(this._items);
+      this._loadItems();
 
       this._filter = new Filter({
         element: this._el.querySelector('[data-component="filter"]')
@@ -57,31 +57,50 @@
 
     _onFilterChange(event) {
       let filterValue = event.detail;
-      let filteredItems = this._getItems(filterValue);
+      let filteredItems = this._filterItems(filterValue);
 
       this._renderItems(filteredItems);
     }
 
-    _getItems(query) {
-      var xhr = new XMLHttpRequest();
+    _loadItems(query) {
+      var url = this._baseUrl;
 
-      xhr.open('GET', this._baseUrl, false);
-
-      xhr.send();
-
-      if (xhr.status !== 200) {
-        alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
-      } else {
-        return JSON.parse(xhr.responseText);
+      if (query) {
+        url += '?query=' + encodeURIComponent(query)
       }
 
+      this._showSpinner();
 
+      this._xhr = new XMLHttpRequest();
 
+      this._xhr.open('GET', url, true);
 
-      // return this._items.filter(function(item) {
-      //   return (item.name.indexOf(query) !== -1)
-      //     || (item.snippet.indexOf(query) !== -1);
-      // });
+      this._xhr.send();
+
+      this._xhr.onload = this._onItemsLoaded.bind(this);
+    }
+
+    _onItemsLoaded() {
+      if (this._xhr.status !== 200) {
+        alert( this._xhr.status + ': ' + this._xhr.statusText ); // пример вывода: 404: Not Found
+      } else {
+        this._items = JSON.parse(this._xhr.responseText);
+
+        this._renderItems(this._items);
+      }
+    }
+
+    _filterItems(query) {
+      let normalizedQuery = query.toLowerCase();
+
+      return this._items.filter(function(item) {
+        return (item.name.toLowerCase().indexOf(normalizedQuery) !== -1)
+          || (item.snippet.toLowerCase().indexOf(normalizedQuery) !== -1);
+      });
+    }
+
+    _showSpinner() {
+      this._itemListElement.innerHTML = 'Items are loading...';
     }
 
     _render() {
