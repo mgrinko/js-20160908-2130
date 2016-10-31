@@ -1,41 +1,62 @@
-'use strict';
+(function() {
 
-class ItemViewer extends Component {
-  constructor(options) {
-    super(options.element);
+  'use strict';
 
-    this.LABELS = {
-      back: options.backButtonLabel || 'Back',
-      submit: options.submitButtonLabel || 'Submit'
-    };
+  const LABELS = {
+    backButton: 'Back',
+    submitButton: 'Submit'
+  };
 
-    this._template = document.getElementById('item-viewer-template').innerHTML;
-    this._templateFunction = _.template(this._template);
+  const SELECTORS = {
+    template: '#item-viewer-template',
+    backButton: '[data-element="back"]'
+  };
 
-    this._el.addEventListener('click', this._onBackButtonClick.bind(this));
-  }
+  const EVENTS = {
+    back: 'viewer.back'
+  };
 
-  render(itemDetails) {
-    this._el.innerHTML = this._templateFunction({
-      item: itemDetails,
-      backButtonLabel: this.LABELS.back,
-      submitButtonLabel: this.LABELS.submit
-    });
-  }
 
-  _onBackButtonClick(event) {
-    let backButton = event.target.closest('[data-element="back"]');
+  class ItemViewer extends Component {
+    constructor(options) {
+      super(options.element);
 
-    if (!backButton) {
-      return;
+      this._LABELS = {
+        backButton: options.backButtonLabel || LABELS.backButton,
+        submitButton: options.submitButtonLabel || LABELS.submitButton
+      };
+
+      this._template = document.querySelector(SELECTORS.template).innerHTML;
+      this._templateFunction = _.template(this._template);
+
+      this._el.addEventListener('click', this._onBackButtonClick.bind(this));
     }
 
-    this._triggerBackEvent();
+    render(itemDetails) {
+      this._el.innerHTML = this._templateFunction({
+        item: itemDetails,
+        backButtonLabel: this._LABELS.backButton,
+        submitButtonLabel: this._LABELS.submitButton
+      });
+    }
+
+    _onBackButtonClick(event) {
+      let backButton = event.target.closest(SELECTORS.backButton);
+
+      if (!backButton) {
+        return;
+      }
+
+      this._triggerBackEvent();
+    }
+
+    _triggerBackEvent() {
+      let event = new CustomEvent(EVENTS.back);
+
+      this._el.dispatchEvent(event);
+    }
   }
 
-  _triggerBackEvent() {
-    let event = new CustomEvent('viewer.back');
+  window.ItemViewer = ItemViewer;
 
-    this._el.dispatchEvent(event);
-  }
-}
+})();
