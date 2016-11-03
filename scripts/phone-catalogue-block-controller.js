@@ -35,8 +35,30 @@ class PhoneCatalogueBlockController {
     this._ajaxPromise = ajaxService.loadJson(url);
 
     this._fadePromise.then(function() {
-      this._ajaxPromise.then(this._showPhoneDetails.bind(this))
+      this._ajaxPromise
+        .then(this._showPhoneDetails.bind(this))
     }.bind(this));
+
+    this._fadePromise
+      .then(function() {
+        return this._ajaxPromise;
+      }.bind(this))
+    
+      .then(function(phoneDetails) {
+        this._showPhoneDetails(phoneDetails);
+        
+        return asdasd();
+      }.bind(this))
+
+      .catch(function(error) {
+        console.log(error);
+
+        return 123;
+      })
+    
+      .then(function(data) {
+        console.log(data);
+      })
   }
 
   _showPhoneDetails(phoneDetails) {
