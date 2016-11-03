@@ -30,10 +30,7 @@ class PhoneCatalogueBlockController {
     let phoneId = event.detail;
     let url = '/data/phones/' + phoneId + '.json';
 
-    this._phoneDetails = null;
-    this._isCatalogueAnimationEnded = null;
-
-    this._catalogue.fade(this._onCatalogueAnimationEnd.bind(this));
+    this._fadePromise = this._catalogue.fade();
 
     ajaxService.loadJson(url, {
       onsuccess: this._onPhoneDetailsLoadSuccess.bind(this),
@@ -44,22 +41,67 @@ class PhoneCatalogueBlockController {
   _onPhoneDetailsLoadSuccess(phoneDetails) {
     this._phoneDetails = phoneDetails;
 
-    if (this._isCatalogueAnimationEnded) {
-      this._viewer.render(phoneDetails);
-      this._viewer.show();
-    }
+    this._fadePromise.then(function() {
+      this._showPhoneDetails(phoneDetails);
+    }.bind(this));
   }
 
-  _onCatalogueAnimationEnd() {
-    this._isCatalogueAnimationEnded = true;
-
-    if (this._phoneDetails) {
-      this._viewer.render(this._phoneDetails);
-      this._viewer.show();
-    }
+  _showPhoneDetails(phoneDetails) {
+    this._viewer.render(phoneDetails);
+    this._viewer.show();
   }
 
   _onPhoneDetailsLoadError(error) {
     console.error(error);
   }
 }
+
+//
+// let promise = {
+//   state: 'pending',
+//   successHandlers: [],
+//   errorHandlers: [],
+//   then(successHandler) {
+//     if (this.state === 'pending') {
+//       this.successHandlers.push(handler)
+//     } else if (promise.state === 'fulfilled') {
+//       handler();
+//     }
+//   }
+// };
+//
+// let response = {
+//   success: true, // false
+//   data: 123,
+//   error: 'error'
+// };
+//
+// promise.then(function(data) { // #f1 => promise.successHandlers.push(#f1)
+//
+// });
+//
+// promise.catch(function(data) { // #f1 => promise.successHandlers.push(#f1)
+//
+// });
+//
+//
+//
+//
+// setTimeout(function() {
+//   if (response.success) {
+//     promise.state = 'fulfilled';
+//
+//     promise.successHandlers.forEach(function(handler) {
+//       handler(response.data);
+//     });
+//   } else {
+//     promise.state = 'rejected';
+//
+//     promise.errorHandlers.forEach(function(handler) {
+//       handler(response.error);
+//     });
+//   }
+// }, 3000);
+
+
+
