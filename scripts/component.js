@@ -16,4 +16,15 @@ class Component {
   hide() {
     this._el.classList.add('js-hidden');
   }
+
+  fade(callback) {
+    this._el.classList.add('fading');
+
+    this._el.addEventListener('transitionend', function() {
+      this._el.classList.add('js-hidden');
+      this._el.classList.remove('fading');
+
+      callback();
+    }.bind(this));
+  }
 }

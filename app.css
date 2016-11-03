@@ -2,6 +2,12 @@
   display: none;
 }
 
+.fading {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 1s;
+}
+
 body {
   padding: 20px;
 }

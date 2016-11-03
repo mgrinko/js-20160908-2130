@@ -21,8 +21,9 @@ class PhoneCatalogueBlockController {
   }
 
   _onViewerBack() {
-    this._viewer.hide();
-    this._catalogue.show();
+    this._viewer.fade(function() {
+      this._catalogue.show();
+    }.bind(this));
   }
 
   _onCatalogueItemSelected(event) {
@@ -41,10 +42,10 @@ class PhoneCatalogueBlockController {
   }
 
   _onPhoneDetailsLoadSuccess(phoneDetails) {
-    this._catalogue.hide();
-
-    this._viewer.render(phoneDetails);
-    this._viewer.show();
+    this._catalogue.fade(function() {
+      this._viewer.render(phoneDetails);
+      this._viewer.show();
+    }.bind(this));
   }
 
   _onPhoneDetailsLoadError(error) {
