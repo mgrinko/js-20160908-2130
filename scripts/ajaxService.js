@@ -6,17 +6,15 @@ const ajaxService = {
   loadJson(url, options) {
     options = options || {};
 
-    return new Promise(function(resolve, reject) {
-      let xhr = new XMLHttpRequest();
-      let method = options.method || 'GET';
+    let xhr = new XMLHttpRequest();
+    let method = options.method || 'GET';
 
-      xhr.open(method, BASE_URL + url, true);
+    xhr.open(method, BASE_URL + url, true);
 
-      xhr.send();
-
+    let promise = new Promise(function(resolve, reject) {
       xhr.onload = function() {
         if (xhr.status !== 200) {
-          reject(new Error(xhr.status + ': ' + xhr.statusText));
+          reject();
 
           return;
         }
@@ -25,8 +23,19 @@ const ajaxService = {
       };
 
       xhr.onerror = function() {
-        reject(new Error(xhr.status + ': ' + xhr.statusText));
+        reject();
       };
+
+      xhr.send();
     });
+
+    return promise
+      .catch(function() {
+        let error = new Error(xhr.status + ': ' + xhr.statusText);
+
+        console.error('Ajax error', error);
+
+        throw error;
+      });
   }
 };

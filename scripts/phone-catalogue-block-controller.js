@@ -32,33 +32,33 @@ class PhoneCatalogueBlockController {
     let url = '/data/phones/' + phoneId + '.json';
 
     this._fadePromise = this._catalogue.fade();
+
     this._ajaxPromise = ajaxService.loadJson(url);
+
 
     this._fadePromise.then(function() {
       this._ajaxPromise
         .then(this._showPhoneDetails.bind(this))
     }.bind(this));
 
+
     this._fadePromise
       .then(function() {
         return this._ajaxPromise;
       }.bind(this))
-    
-      .then(function(phoneDetails) {
-        this._showPhoneDetails(phoneDetails);
-        
-        return asdasd();
+
+      .then(this._showPhoneDetails.bind(this))
+
+      .catch(this._onError.bind(this));
+
+
+    Promise.all([this._fadePromise, this._ajaxPromise])
+      .then(function(results) {
+        console.log(results[1]);
       }.bind(this))
 
-      .catch(function(error) {
-        console.log(error);
+      .catch(this._onError.bind(this));
 
-        return 123;
-      })
-    
-      .then(function(data) {
-        console.log(data);
-      })
   }
 
   _showPhoneDetails(phoneDetails) {
@@ -66,7 +66,7 @@ class PhoneCatalogueBlockController {
     this._viewer.show();
   }
 
-  _onPhoneDetailsLoadError(error) {
+  _onError(error) {
     console.error(error);
   }
 }
