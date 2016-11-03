@@ -1,11 +1,13 @@
 'use strict';
 
+const BASE_URL = location.origin + location.pathname.slice(0, -1);
+
 const ajaxService = {
   loadJson(url, options) {
     let xhr = new XMLHttpRequest();
     let method = options.method || 'GET';
 
-    xhr.open(method, url, true);
+    xhr.open(method, BASE_URL + url, true);
 
     xhr.send();
 
