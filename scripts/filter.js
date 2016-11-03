@@ -1,23 +1,38 @@
 'use strict';
 
-class Filter extends Component {
-  constructor(options) {
-    super(options.element);
+(function() {
 
-    this._fieldElement = this._el.querySelector('[data-element="field"]');
+  const EVENTS = {
+    change: 'filter.change'
+  };
 
-    this._fieldElement.oninput = this._onFiledValueChange.bind(this);
+  const SELECTORS = {
+    field: '[data-element="field"]'
+  };
+
+  class Filter extends Component {
+    constructor(options) {
+      super(options.element);
+
+      this._fieldElement = this._el.querySelector(SELECTORS.field);
+
+      this._fieldElement.oninput = this._onFiledValueChange.bind(this);
+    }
+
+    _onFiledValueChange(event) {
+      this._triggerFilterChangeEvent();
+    }
+
+    _triggerFilterChangeEvent() {
+      let event = new CustomEvent(EVENTS.change, {
+        detail: this._fieldElement.value
+      });
+
+      this._el.dispatchEvent(event);
+    }
   }
 
-  _onFiledValueChange(event) {
-    this._triggerFilterChangeEvent();
-  }
+  Filter.EVENTS = EVENTS;
 
-  _triggerFilterChangeEvent() {
-    let event = new CustomEvent('filter.change', {
-      detail: this._fieldElement.value
-    });
-
-    this._el.dispatchEvent(event);
-  }
-}
+  window.Filter = Filter;
+})();

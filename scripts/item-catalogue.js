@@ -6,6 +6,12 @@
   };
 
   const SELECTORS = {
+    mainTemplate: '#item-catalogue-template',
+    itemsTemplate: '#item-catalogue-items-template',
+    itemsList: '[data-element="items-list"]',
+    filter: '[data-component="filter"]',
+    itemDetailsLink: '[data-element="item-details-link"]',
+    itemContainer: '[data-element="item-container"]'
   };
 
   const EVENTS = {
@@ -20,33 +26,33 @@
 
       this._items = [];
 
-      this._mainTemplate = document.getElementById('item-catalogue-template').innerHTML;
-      this._itemsTemplate = document.getElementById('item-catalogue-items-template').innerHTML;
+      this._mainTemplate = document.querySelector(SELECTORS.mainTemplate).innerHTML;
+      this._itemsTemplate = document.querySelector(SELECTORS.itemsTemplate).innerHTML;
       this._itemsTemplateFunction = _.template(this._itemsTemplate);
 
       this._render();
 
-      this._itemListElement = this._el.querySelector('[data-element="items-list"]');
+      this._itemListElement = this._el.querySelector(SELECTORS.itemsList);
 
       this._loadItems();
 
       this._filter = new Filter({
-        element: this._el.querySelector('[data-component="filter"]')
+        element: this._el.querySelector(SELECTORS.filter)
       });
 
 
       this._el.addEventListener('click', this._onItemDetailsLinkClick.bind(this));
-      this._filter.getElement().addEventListener('filter.change', this._onFilterChange.bind(this));
+      this._filter.getElement().addEventListener(Filter.EVENTS.change, this._onFilterChange.bind(this));
     }
 
     _onItemDetailsLinkClick(event) {
-      let link = event.target.closest('[data-element="item-details-link"]');
+      let link = event.target.closest(SELECTORS.itemDetailsLink);
 
       if (!link) {
         return;
       }
 
-      let itemContainer = link.closest('[data-element="item-container"]');
+      let itemContainer = link.closest(SELECTORS.itemContainer);
 
       if (!itemContainer) {
         return;

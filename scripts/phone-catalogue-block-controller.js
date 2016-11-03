@@ -17,7 +17,7 @@ class PhoneCatalogueBlockController {
     this._catalogue.show();
 
     this._catalogue.getElement().addEventListener(ItemCatalogue.EVENTS.itemSelected, this._onCatalogueItemSelected.bind(this));
-    this._viewer.getElement().addEventListener('viewer.back', this._onViewerBack.bind(this));
+    this._viewer.getElement().addEventListener(ItemViewer.EVENTS.back, this._onViewerBack.bind(this));
   }
 
   _onViewerBack() {

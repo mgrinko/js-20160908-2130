@@ -57,6 +57,8 @@
     }
   }
 
+  ItemViewer.EVENTS = EVENTS;
+
   window.ItemViewer = ItemViewer;
 
 })();
