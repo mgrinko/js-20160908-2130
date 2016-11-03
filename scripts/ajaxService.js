@@ -4,25 +4,29 @@ const BASE_URL = location.origin + location.pathname.slice(0, -1);
 
 const ajaxService = {
   loadJson(url, options) {
-    let xhr = new XMLHttpRequest();
-    let method = options.method || 'GET';
+    options = options || {};
 
-    xhr.open(method, BASE_URL + url, true);
+    return new Promise(function(resolve, reject) {
+      let xhr = new XMLHttpRequest();
+      let method = options.method || 'GET';
 
-    xhr.send();
+      xhr.open(method, BASE_URL + url, true);
 
-    xhr.onload = function() {
-      if (xhr.status !== 200) {
-        options.onerror(new Error(xhr.status + ': ' + xhr.statusText));
+      xhr.send();
 
-        return;
-      }
+      xhr.onload = function() {
+        if (xhr.status !== 200) {
+          reject(new Error(xhr.status + ': ' + xhr.statusText));
 
-      options.onsuccess( JSON.parse(xhr.responseText) );
-    };
-    
-    xhr.onerror = function() {
-      options.onerror(new Error(xhr.status + ': ' + xhr.statusText));
-    };
+          return;
+        }
+
+        resolve( JSON.parse(xhr.responseText) );
+      };
+
+      xhr.onerror = function() {
+        reject(new Error(xhr.status + ': ' + xhr.statusText));
+      };
+    });
   }
 };

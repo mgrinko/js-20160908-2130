@@ -77,10 +77,9 @@
 
       this._showSpinner();
 
-      ajaxService.loadJson(url, {
-        onsuccess: this._onItemsLoadSuccess.bind(this),
-        onerror: this._onItemsLoadError.bind(this)
-      });
+      ajaxService.loadJson(url)
+        .then(this._onItemsLoadSuccess.bind(this))
+        .catch(this._onItemsLoadError.bind(this));
     }
 
     _onItemsLoadSuccess(items) {

@@ -21,9 +21,10 @@ class PhoneCatalogueBlockController {
   }
 
   _onViewerBack() {
-    this._viewer.fade(function() {
-      this._catalogue.show();
-    }.bind(this));
+    this._viewer.fade()
+      .then(function() {
+        this._catalogue.show();
+      }.bind(this));
   }
 
   _onCatalogueItemSelected(event) {
@@ -31,18 +32,10 @@ class PhoneCatalogueBlockController {
     let url = '/data/phones/' + phoneId + '.json';
 
     this._fadePromise = this._catalogue.fade();
-
-    ajaxService.loadJson(url, {
-      onsuccess: this._onPhoneDetailsLoadSuccess.bind(this),
-      onerror: this._onPhoneDetailsLoadError.bind(this)
-    });
-  }
-
-  _onPhoneDetailsLoadSuccess(phoneDetails) {
-    this._phoneDetails = phoneDetails;
+    this._ajaxPromise = ajaxService.loadJson(url);
 
     this._fadePromise.then(function() {
-      this._showPhoneDetails(phoneDetails);
+      this._ajaxPromise.then(this._showPhoneDetails.bind(this))
     }.bind(this));
   }
 
