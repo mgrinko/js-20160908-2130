@@ -10,6 +10,7 @@ function accept(req, res) {
       file.serve(req, res);
     }, 100);
   } else {
+    req.url = '/public' + req.url
     file.serve(req, res);
   }
 }

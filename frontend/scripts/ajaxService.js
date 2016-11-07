@@ -2,7 +2,7 @@
 
 const BASE_URL = location.origin + location.pathname.slice(0, -1);
 
-const ajaxService = {
+module.exports = {
   loadJson(url, options) {
     options = options || {};
 

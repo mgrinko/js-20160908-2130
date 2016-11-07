@@ -32,3 +32,5 @@ class Component {
     return promise;
   }
 }
+
+module.exports = Component;

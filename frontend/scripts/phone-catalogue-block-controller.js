@@ -1,5 +1,13 @@
 'use strict';
 
+// import ItemCatalogue from './item-catalogue.js';
+// import ItemViewer from './item-viewer.js';
+// import ajaxService from './ajaxService.js';
+
+const ItemCatalogue = require('./item-catalogue.js');
+const ItemViewer = require('./item-viewer.js');
+const ajaxService = require('./ajaxService.js');
+
 class PhoneCatalogueBlockController {
   constructor(options) {
     this._el = options.element;
@@ -71,52 +79,4 @@ class PhoneCatalogueBlockController {
   }
 }
 
-//
-// let promise = {
-//   state: 'pending',
-//   successHandlers: [],
-//   errorHandlers: [],
-//   then(successHandler) {
-//     if (this.state === 'pending') {
-//       this.successHandlers.push(handler)
-//     } else if (promise.state === 'fulfilled') {
-//       handler();
-//     }
-//   }
-// };
-//
-// let response = {
-//   success: true, // false
-//   data: 123,
-//   error: 'error'
-// };
-//
-// promise.then(function(data) { // #f1 => promise.successHandlers.push(#f1)
-//
-// });
-//
-// promise.catch(function(data) { // #f1 => promise.successHandlers.push(#f1)
-//
-// });
-//
-//
-//
-//
-// setTimeout(function() {
-//   if (response.success) {
-//     promise.state = 'fulfilled';
-//
-//     promise.successHandlers.forEach(function(handler) {
-//       handler(response.data);
-//     });
-//   } else {
-//     promise.state = 'rejected';
-//
-//     promise.errorHandlers.forEach(function(handler) {
-//       handler(response.error);
-//     });
-//   }
-// }, 3000);
-
-
-
+module.exports = PhoneCatalogueBlockController;
