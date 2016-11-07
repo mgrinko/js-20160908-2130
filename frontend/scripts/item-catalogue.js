@@ -1,13 +1,11 @@
 'use strict';
 
-// import Component from './component.js';
-// import Filter from './filter.js';
-// import ajaxService from './ajaxService.js';
+import Component from './component.js';
+import Filter from './filter.js';
+import ajaxService from './ajaxService.js';
 
-const Component = require('./component.js');
-const Filter = require('./filter.js');
-const ajaxService = require('./ajaxService.js');
-
+import template from './../templates/item-catalogue-template.html';
+import itemsTemplateFunction from './../templates/item-catalogue-items-template.hbs';
 
 const SELECTORS = {
   mainTemplate: '#item-catalogue-template',
@@ -23,17 +21,13 @@ const EVENTS = {
 };
 
 
-class ItemCatalogue extends Component {
+export default class ItemCatalogue extends Component {
   constructor(options) {
     super(options.element);
 
     this._baseUrl = options.baseUrl;
 
     this._items = [];
-
-    this._mainTemplate = document.querySelector(SELECTORS.mainTemplate).innerHTML;
-    this._itemsTemplate = document.querySelector(SELECTORS.itemsTemplate).innerHTML;
-    this._itemsTemplateFunction = _.template(this._itemsTemplate);
 
     this._render();
 
@@ -113,11 +107,11 @@ class ItemCatalogue extends Component {
   }
 
   _render() {
-    this._el.innerHTML = this._mainTemplate;
+    this._el.innerHTML = template;
   }
 
   _renderItems(items) {
-    this._itemListElement.innerHTML = this._itemsTemplateFunction({
+    this._itemListElement.innerHTML = itemsTemplateFunction({
       items: items
     });
   }
