@@ -4,7 +4,7 @@
 // import ItemViewer from './item-viewer.js';
 // import ajaxService from './ajaxService.js';
 
-const ItemCatalogue = require('./item-catalogue.js');
+const ItemCatalogue = require('./item-catalogue');
 const ItemViewer = require('./item-viewer.js');
 const ajaxService = require('./ajaxService.js');
 

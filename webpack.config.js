@@ -1,5 +1,5 @@
-// let webpack = require('webpack');
-// let path = require('path');
+let webpack = require('webpack');
+let path = require('path');
 
 
 module.exports = {
@@ -15,6 +15,10 @@ module.exports = {
 
   module: {
     loaders: [
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
+      },
       {
         test: /\.html$/,
         loader: 'raw'
@@ -32,7 +36,15 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+
+  // plugins: [
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     compress: {
+  //       warnings: false
+  //     }
+  //   }),
+  // ]
 };
 
 

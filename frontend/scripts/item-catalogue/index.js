@@ -1,15 +1,15 @@
 'use strict';
 
-import Component from './component.js';
-import Filter from './filter.js';
-import ajaxService from './ajaxService.js';
+import styles from './style.css';
 
-import template from './../templates/item-catalogue-template.html';
-import itemsTemplateFunction from './../templates/item-catalogue-items-template.hbs';
+import Component from './../component.js';
+import Filter from './../filter.js';
+import ajaxService from './../ajaxService.js';
+
+import template from './templates/item-catalogue-template.html';
+import itemsTemplateFunction from './templates/item-catalogue-items-template.hbs';
 
 const SELECTORS = {
-  mainTemplate: '#item-catalogue-template',
-  itemsTemplate: '#item-catalogue-items-template',
   itemsList: '[data-element="items-list"]',
   filter: '[data-component="filter"]',
   itemDetailsLink: '[data-element="item-details-link"]',
