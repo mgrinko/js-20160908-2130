@@ -17,13 +17,15 @@
     "url": "https://github.com/mgrinko/js-20160908-2130/issues"
   },
   "homepage": "https://github.com/mgrinko/js-20160908-2130#readme",
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.18.0",
-    "css-loader": "^0.25.0"
-  },
-  "dependencies": {
-    "handlebars-loader": "^1.4.0"
+    "css-loader": "^0.25.0",
+    "handlebars": "^4.0.5",
+    "handlebars-loader": "^1.4.0",
+    "raw-loader": "^0.5.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
   }
 }

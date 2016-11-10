@@ -15,6 +15,6 @@ function accept(req, res) {
   }
 }
 
-http.createServer(accept).listen(8080);
+http.createServer(accept).listen(3000);
 
-console.log('Server running on port 8080');
+console.log('Server running on port 3000');
