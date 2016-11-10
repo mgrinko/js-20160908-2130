@@ -1,0 +1,18 @@
+{{log items }}
+
+{{#each items}}
+
+<li class="thumbnail"
+  data-element="item-container"
+  data-item-id="{{ this.id }}">
+
+  <a href="#{{ this.id }}" class="thumb" data-element="item-details-link">
+    <img alt="{{{ this.name }}}" src="{{ this.imageUrl }}">
+  </a>
+
+  <a href="#{{ this.id }}" data-element="item-details-link">{{{ this.name }}}</a>
+
+  <p>{{{ this.snippet }}}</p>
+</li>
+
+{{/each}}
